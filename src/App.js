@@ -1,39 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [toDo, setToDo] = useState("");
-  const [toDos, setToDos] = useState([]);
-  const onChange = (event) => {
-    setToDo(event.target.value);
-  };
-  const onSubmit = (event) => {
-    event.preventDefault();
-    if (toDo === "") {
-      return;
-    }
-    setToDos((currentArray) => [toDo, ...currentArray]); // 현재값을 받아오는 currentArray 함수를 만들고 입력한 toDo와 현재 배열에 있는 값을 더 한다. setToDos는 toDos있는 값을 기억하는 함수네
-    setToDo("");
-  };
-  console.log(toDos);
-
+  const [loading, setLoading] = useState(true);
+  const [coins, setCoins] = useState([]);
+  const [myMoney, setMyMoney] = useState("");
+  const [getCoin, setgetCoin] = useState("");
+  const writeMoney = (event) => setMyMoney(event.target.value);
+  const selectCoin = (event) => setgetCoin(event.target.value);
+  useEffect(() => {
+    fetch("https://api.coinpaprika.com/v1/tickers")
+      .then((response) => response.json())
+      .then((json) => {
+        setCoins(json);
+        setLoading(false);
+      });
+  }, []);
   return (
     <div>
-      <h1>My To Dos ({toDos.length})</h1>
-      <form onSubmit={onSubmit}>
+      <h1>the Coins! {loading ? null : `(${coins.length})`}</h1>
+      <div>
         <input
-          onChange={onChange}
-          value={toDo}
-          type="text"
-          placeholder="Write your to do..."
-        />
-        <button>Add To Do</button>
-      </form>
-      <hr />
-      <ul>
-        {toDos.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
+          type="number"
+          value={myMoney}
+          onChange={writeMoney}
+          placeholder="Write your USD"
+        ></input>
+      </div>
+      {loading ? (
+        <strong>Loading...</strong>
+      ) : (
+        <select onChange={selectCoin}>
+          <option key="-1">select buy coins</option>
+          {coins.map((coin, index) => (
+            <option key={index} value={coin.quotes.USD.price}>
+              {coin.name} ({coin.symbol}) : ${coin.quotes.USD.price.toFixed(2)}
+            </option>
+          ))}
+        </select>
+      )}
+      <div>
+        <h2>
+          Coins you can buy :{" "}
+          {getCoin > 0 ? (myMoney / getCoin).toFixed(2) : null}
+        </h2>
+      </div>
     </div>
   );
 }
