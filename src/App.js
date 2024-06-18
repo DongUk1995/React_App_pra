@@ -8,7 +8,7 @@ function App() {
     console.log("I run only once");
   }, []);
   useEffect(() => {
-    console.log("I run when 'keyword' changes");
+    console.log({ keyword });
   }, [keyword]);
 
   useEffect(() => {
