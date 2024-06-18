@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 
 function Hello() {
-  function hiFn() {
-    console.log("created :)");
-    return byFn; // 처음 show 할 때 created가 나오고 컴포넌트가 파괴될 때 리턴한 Function을 실행한다.
-  }
-  function byFn() {
-    console.log("bye :(");
-  }
-  useEffect(hiFn, []);
+  /*useEffect(function () {
+    console.log("hi :");
+    return () => console.log("bye :(");
+  }, []);*/
+  useEffect(() => {
+    console.log("hi :)");
+    return function () {
+      console.log("bye :(");
+    };
+  }, []);
   return <h1>Hello</h1>;
 }
 
