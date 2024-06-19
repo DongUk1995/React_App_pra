@@ -1,4 +1,5 @@
-1. 과제
+1. prject_search_movie_rating > 8.5 Up
 
-1) 로딩 전에 인풋으로 가지고 있는 비용을 입력한 후
-2) 입력 한 비용을 중심으로 살 수 있는 코인을 탐색해야 한다.
+  - Github hompage : https://DongUk1995.github.io/React_App_pra
+
+
