@@ -26,6 +26,7 @@ function Home() {
           {movies.map((movie) => (
             <Moive
               key={movie.id} // key는 react.js에서만 map안에서 componet들을 불러 올 때 사용하는 것이다.
+              id={movie.id}
               coverImg={movie.medium_cover_image}
               title={movie.title}
               summary={movie.summary}
