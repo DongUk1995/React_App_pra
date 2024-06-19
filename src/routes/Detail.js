@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styles from "./detail.module.css";
 
 function Detail() {
   const { id } = useParams();
@@ -20,19 +21,28 @@ function Detail() {
   //console.log(id); // const id = useParms()의 콘솔 로그 결과는 {id : xxxxx} {}씌우면 xxxxx만 나옴
 
   return (
-    <div>
+    <div className={styles.container}>
       {loading ? (
-        <h1>Loading...</h1>
+        <h1 className={styles.roder}>Loading...</h1>
       ) : (
-        <div>
-          <img src={movie.medium_cover_image} alt="title" />
-          <h1>{movie.title}</h1>
-          <p>{movie.description_full}</p>
-          <ul>
-            {movie.genres.map((genres) => (
-              <li key={genres}>{genres}</li>
-            ))}
-          </ul>
+        <div className={styles.one_movie}>
+          <img
+            className={styles.one_movie__img}
+            src={movie.medium_cover_image}
+            alt="title"
+          />
+          <div className={styles.one_movie__title}>
+            <h1>{movie.title}</h1>
+            <div>
+              ⭐️ {movie.rating} / SINCE: {movie.year}
+            </div>
+            <p>{movie.description_full}</p>
+            <ul>
+              {movie.genres.map((genres) => (
+                <li key={genres}>{genres}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Moive from "../components/movie";
+import styles from "./home.module.css";
 
 function Home() {
   const [loading, setLoading] = useState(true);
@@ -18,15 +19,18 @@ function Home() {
   }, []);
   //console.log(movies);
   return (
-    <div>
+    <div className={styles.container}>
       {loading ? (
-        <h1>Loading...</h1>
+        <div className={styles.loader}>
+          <h1>Loading...</h1>
+        </div>
       ) : (
-        <div>
+        <div className={styles.movies}>
           {movies.map((movie) => (
             <Moive
               key={movie.id} // key는 react.js에서만 map안에서 componet들을 불러 올 때 사용하는 것이다.
               id={movie.id}
+              year={movie.year}
               coverImg={movie.medium_cover_image}
               title={movie.title}
               summary={movie.summary}
